@@ -1,0 +1,14 @@
+/* Google Maps */
+#map {
+    height: 500px;
+    width: 100%;
+}
+.jumbotron{
+    background: none
+}
+
+#bground{
+    height: 100vh;
+background: -webkit-linear-gradient(-128deg, rgb(183, 11, 11), rgb(130, 12, 208));
+background: linear-gradient(-128deg, rgb(183, 11, 11), rgb(130, 12, 208));
+}
