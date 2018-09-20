@@ -1,0 +1,85 @@
+<!-- Jaspal Bainiwal -->
+<% include partials/header %>
+<div id="bground">
+<div class="jumbotron">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1 class="text-center text-white">Job opportunities near me</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      
+    </div>
+  </div>
+  <div class="row">
+    <div id="map" class="col-sm-6 mt-3"></div>
+    <div class="col-sm-6 mt-3">
+<table class="table table-hover table-sm">
+  <thead>
+    <tr>
+      <th scope="col" class="text-white">Company</th>
+      <th scope="col" class="text-white">Title</th>
+      <th scope="col" class="text-white">Apply</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for(let x = 0; x < data.length; x++){ %>
+    <% if (x == 10){%> <% break;%> <%}%>
+    <tr>
+      <td class="text-white font-weight-bold"><%= data[x].value[0].name%></td>
+      <td class="text-white font-weight-bold"><%= data[x].value[0].title%></td>
+      <td><a class='icons' target='blank' href="<%= data[x].value[0].url%>">
+                <i class="far fa-arrow-alt-circle-right fa-2x" style="color:white"></i>
+          </a>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
+    </div>
+  </div>
+</div>
+</div>
+<% include partials/footer %>
+</div>
+<script>
+  function initMap() {
+
+    var center = {lat: 37.3382, lng: -121.8863 };
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 11,
+        center: center,
+        scrollwheel: false
+    });
+
+    <% for (var job of data){ %>
+    addMarker({coords: {lat: <%= job.value[0].latitude%> , lng: <%=job.value[0].longitude%>},
+    content:"<%= job.value[0].name%>"
+    });
+    <% } %>
+
+ 
+
+    
+    function addMarker(obj){
+      console.log(obj.content);
+      var marker = new google.maps.Marker({
+        position:obj.coords,
+        map:map,
+      });
+      if(obj.content){
+        var infoWindow = new google.maps.InfoWindow({
+          content:obj.content
+        });
+        marker.addListener('click', function(){
+          infoWindow.open(map, marker);
+        });
+      }
+    }
+}
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=initMap">
+</script>
